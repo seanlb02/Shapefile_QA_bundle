@@ -20,9 +20,9 @@ import json
 
 
 def duplicate_check():
-    path1 = "C:/Users/SeanGyuris/Documents/DupTest"
-    rootpath = "C:/Dropbox (MCGC CLOUD)/5.0 PROJECTS/5.06 LONDON STUDIO/2023/1073LON NEOM NAT RES DMP/P5 DATA EXCHANGE/00 NEOM/QC_SHAPEFILES"
-    boundary = "C:/Dropbox (MCGC CLOUD)/5.0 PROJECTS/5.06 LONDON STUDIO/2023/1073LON NEOM NAT RES DMP/P5 DATA EXCHANGE/00 NEOM/QC_SHAPEFILES/NEOM_Boundary"
+    path1 = "C:/"
+    rootpath = ""
+
     # Walk through the users QA folder and do stuff:
     for root, dirs, file in os.walk(path1):
         for name in file:  
@@ -43,15 +43,19 @@ def duplicate_check():
                                                     gdf = gpd.read_file(f'{root}/{test}')
                                                     checkbyt = gdf.to_wkb()
                                                     test_records = gdf.shape[0] * gdf.shape[1]
+
                                                     if str(checkbyt.geometry.values) == str(byt.geometry.values) and records == test_records:
                                                         print(f'''
                                                          WARNING {layer_name} is a duplicate of {test_layer},
                                                         stored here: {root}/{test}
+                                                        {varibable} is the latest version
                                                         ''')
                                                        
                                                 except fiona.errors.DriverError as err: 
                                                     print(err)
+                                                    pass
                         except fiona.errors.DriverError as err: 
                                                     print(err)
+                                                    pass
 
 duplicate_check()
